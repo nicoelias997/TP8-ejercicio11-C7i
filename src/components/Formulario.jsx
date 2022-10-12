@@ -1,49 +1,25 @@
-import React, {useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Button, Col, Form, Row } from 'react-bootstrap'
 import {category} from "../helpers"
 import ListaNoticias from '../components/ListaNoticias';
 
-
 const Formulario = () => {
 
   const [select, setSelect] = useState("")
-  const [noticia, setNoticia] = useState([])
+  const [noticias, setNoticias] = useState([])
 
-//No me sale de esta forma
-  // useEffect(() =>  {
 
-  //   async function fetchData(){
-  //     console.log(select)
-  //     const res = await fetch(`https://newsapi.org/v2/top-headlines?category=${select}&apiKey=71d25bc62d2f4d5284127ad7b81ac770`)
-  //     const data = await res.json()
-  //     const arrayObj = data.articles  
-  //     setNoticia(arrayObj)
-
-  //   }
-  //   fetchData()
-  //   } )
-
-  useEffect(() => {
-    fetch(`https://newsapi.org/v2/top-headlines?category=${select}&apiKey=71d25bc62d2f4d5284127ad7b81ac770`)
-    .then(res => res.json())
-    .then(data => data.articles)
-    .then(arrayObj => {
-      setNoticia(arrayObj)
-      console.log(select)
-    })},[select])
-        // for(let i = 0; i < arrayObj.length; i++){
-        //   setNoticia([{
-        //     imagen: arrayObj[i].urlToImage,
-        //     titulo: arrayObj[i].title,
-        //     autor: arrayObj[i].author,
-        //     noticia: arrayObj[i].url,
-        //     descripcion: arrayObj[i].description
-        //   }])
-        // } 
-
-  const noticiaCompleta = (nombre) => {
-    console.log(nombre)
-  }
+  const obtenerNoticias =  async () => {
+    try{
+    let res = await fetch(`https://newsapi.org/v2/top-headlines?category=${select}&apiKey=71d25bc62d2f4d5284127ad7b81ac770`)
+    let data = await res.json()
+    let  arrayObj = data.articles
+    setNoticias(arrayObj)
+    }
+    catch(e){
+      console.log(e)
+    }
+    } 
 
   return (
     <Col>
@@ -65,18 +41,18 @@ const Formulario = () => {
         </Form.Select>
         </Col>
       </Row>
-        </Form.Group>   
-        {/* <Button className="btn btn-sm rounded-3 btn-light mt-3" onClick={() => obtenerNoticia()}>obtener noticia</Button>    */}
-        <Button className="btn btn-sm rounded-3 btn-light mt-3" onClick={() => noticiaCompleta()}> noticia</Button> 
-        
+        </Form.Group>  
+        <Button className="mt-2" onClick={() => obtenerNoticias()}>Pintar
+          </Button>         
     </Form>
     <Row>
-    {/* {
-      noticia.map(item => (
-        <ListaNoticias titulo={item.titulo} autor={item.autor} noticiaCompleta={() => noticiaCompleta(item.descripcion)} noticia={item.descripcion}></ListaNoticias>
+  
+    {
+      noticias.map(item => (
+        <ListaNoticias titulo={item.title} key={item.description}autor={item.author} url={item.url} noticia={item.description} imagen={item.urlToImagen}></ListaNoticias>
+        
       ))
-    } */}
-    <ListaNoticias></ListaNoticias>
+    }
     </Row>
     </Col>
     
