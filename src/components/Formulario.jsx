@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Button, Col, Form, Row } from 'react-bootstrap'
+import React, { useEffect, useState } from 'react'
+import {  Col, Form, Row } from 'react-bootstrap'
 import {category} from "../helpers"
 import ListaNoticias from '../components/ListaNoticias';
 
@@ -9,9 +9,12 @@ const Formulario = () => {
   const [noticias, setNoticias] = useState([])
 
 
+  useEffect(() => {
+
   const obtenerNoticias =  async () => {
+    if(select !== ""){
     try{
-    let res = await fetch(`https://newsapi.org/v2/top-headlines?category=${select}&apiKey=71d25bc62d2f4d5284127ad7b81ac770`)
+    let res = await fetch(`https://newsapi.org/v2/top-headlines?category=${select}&apiKey=c9feca5ea4804471950cb2be6275d11d`)
     let data = await res.json()
     let  arrayObj = data.articles
     setNoticias(arrayObj)
@@ -19,7 +22,10 @@ const Formulario = () => {
     catch(e){
       console.log(e)
     }
+  }
     } 
+    obtenerNoticias()
+  })
 
   return (
     <Col>
@@ -41,15 +47,13 @@ const Formulario = () => {
         </Form.Select>
         </Col>
       </Row>
-        </Form.Group>  
-        <Button className="mt-2" onClick={() => obtenerNoticias()}>Pintar
-          </Button>         
+        </Form.Group>         
     </Form>
     <Row>
   
     {
       noticias.map(item => (
-        <ListaNoticias titulo={item.title} key={item.description}autor={item.author} url={item.url} noticia={item.description} imagen={item.urlToImagen}></ListaNoticias>
+        <ListaNoticias titulo={item.title} key={`${item.url}${item.author}`} autor={item.author} url={item.url} noticia={item.description} imagen={item.urlToImage}></ListaNoticias>
         
       ))
     }
