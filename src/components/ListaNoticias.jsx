@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, Card, Col } from 'react-bootstrap'
 
 
-const ListaNoticias = (props) => {
+const ListaNoticias = (props) => {  
   return (
     <Col xs={12} sm={6} md={4} lg={3} className="d-flex">
     <Card className='mt-2'>
