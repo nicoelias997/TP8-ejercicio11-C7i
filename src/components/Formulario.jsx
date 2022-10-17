@@ -28,7 +28,7 @@ const Formulario = () => {
         if (select !== "") {
           try {
             let res = await fetch(
-              `https://newsapi.org/v2/top-headlines?category=${select}&apiKey=pub_122559621e8d1ff3ce700f15664a5cfa8cc7b
+              `https://newsapi.org/v2/top-headlines?category=${select}&apiKey=pub_122559621e8d1ff3ce700f15664a5cfa8cc7b`
             );
             let data = await res.json();
             let arrayObj = data.articles;
