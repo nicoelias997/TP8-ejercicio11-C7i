@@ -28,10 +28,10 @@ const Formulario = () => {
         if (select !== "") {
           try {
             let res = await fetch(
-              `https://newsapi.org/v2/top-headlines?category=${select}&apiKey=pub_122559621e8d1ff3ce700f15664a5cfa8cc7b`
+              `https://newsdata.io/api/1/news?apikey=pub_122559621e8d1ff3ce700f15664a5cfa8cc7b&category=${select}`
             );
             let data = await res.json();
-            let arrayObj = data.articles;
+            let arrayObj = data.results;
             setNoticias(arrayObj);
           } catch (e) {
             console.log(e);
@@ -50,10 +50,10 @@ const Formulario = () => {
         if (selectPais !== "") {
           try {
             let res = await fetch(
-              `https://newsapi.org/v2/top-headlines?country=${selectPais}&apiKey=7dba0a2ddb914b26a0b640a9d2bb0740`
+              `https://newsdata.io/api/1/news?apikey=pub_122559621e8d1ff3ce700f15664a5cfa8cc7b&country=${selectPais}`
             );
             let data = await res.json();
-            let arrayObj = data.articles;
+            let arrayObj = data.results;
             setNoticias(arrayObj);
           } catch (e) {
             console.log(e);
@@ -134,12 +134,12 @@ const Formulario = () => {
         {noticias.map((item) => (
           <ListaNoticias
             titulo={item.title}
-            key={`${item.url}${item.author}`}
-            autor={item.author}
-            url={item.url}
-            noticia={item.description}
+            key={`${item.link}${item.creator}`}
+            autor={item.creator}
+            url={item.link}
+            noticia={item.content}
             arrayNoticias={noticias}
-            imagen={item.urlToImage}
+            imagen={item.image_url}
           ></ListaNoticias>
         ))}
       </Row>
